@@ -18,7 +18,7 @@ export let profileData = {
     },
     contact: {
         email: "shahriahedaet@gmail.com",
-        phone: "+880 123 456 7890",
-        whatsapp: "+880 123 456 7890"
+        phone: "+880 1741453691",
+        whatsapp: "+880 1741453691"
     }
 };
