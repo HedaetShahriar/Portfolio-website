@@ -3,13 +3,14 @@
 "use client";
 import { useState, useEffect } from 'react';
 import AddEditExperienceModal from '@/components/admin/AddEditExperienceModal';
-import DeleteConfirmationModal from '@/components/admin/DeleteConfirmationModal';
 import EditDeleteButtons from '@/components/admin/EditDeleteButtons';
+import Swal from 'sweetalert2';
 
 export default function ExperiencePage() {
   const [experience, setExperience] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingExperience, setDeletingExperience] = useState(null);
+  const [editingExperience, setEditingExperience] = useState(null);
 
   const fetchExperience = async () => {
     const res = await fetch('/api/experience');
@@ -29,10 +30,25 @@ export default function ExperiencePage() {
     else { alert("Failed to save experience."); }
   };
 
-  const handleDeleteExperience = async (expId) => {
-    const res = await fetch(`/api/experience/${expId}`, { method: 'DELETE' });
-    if (res.ok) { fetchExperience(); setDeletingExperience(null); } 
-    else { alert("Failed to delete experience."); }
+  const handleDeleteExperience = async (experienceId) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'This action cannot be undone. This will permanently delete the experience.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    });
+    if (!result.isConfirmed) return;
+    const res = await fetch(`/api/experience/${experienceId}`, { method: 'DELETE' });
+    if (res.ok) {
+        fetchExperience();
+        setDeletingExperience(null);
+        Swal.fire('Deleted!', 'The experience has been deleted.', 'success');
+    } else {
+        Swal.fire('Error', 'Failed to delete experience.', 'error');
+    }
   };
 
   return (
@@ -50,7 +66,10 @@ export default function ExperiencePage() {
                     <p className="text-gray-400">{exp.company}</p>
                     <p className="text-indigo-400 text-sm">{exp.duration}</p>
                 </div>
-                <EditDeleteButtons onEdit={() => alert("Edit coming soon.")} onDelete={() => setDeletingExperience(exp)} />
+                <EditDeleteButtons 
+                  onEdit={() => { setEditingExperience(exp); setIsModalOpen(true); }}
+                  onDelete={() => handleDeleteExperience(exp.id)}
+                />
             </div>
         )) : (
             <div className="bg-gray-800 rounded-lg shadow-lg p-8 text-center text-gray-400">
@@ -59,8 +78,11 @@ export default function ExperiencePage() {
         )}
       </div>
 
-      {isModalOpen && <AddEditExperienceModal onClose={() => setIsModalOpen(false)} onSave={handleSaveExperience} />}
-      {deletingExperience && <DeleteConfirmationModal onConfirm={() => handleDeleteExperience(deletingExperience.id)} onCancel={() => setDeletingExperience(null)} />}
+      {isModalOpen && <AddEditExperienceModal 
+        experience={editingExperience} 
+        onClose={() => setIsModalOpen(false)} 
+        onSave={handleSaveExperience} 
+      />}
     </div>
   );
 }

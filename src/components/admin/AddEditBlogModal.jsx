@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const AddEditBlogModal = ({ onClose, onSave }) => {
     const [title, setTitle] = useState('');
@@ -11,9 +12,10 @@ const AddEditBlogModal = ({ onClose, onSave }) => {
         onSave({ title, content, imageUrl });
     };
 
-    return (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-            <div className="bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl">
+    if (typeof window === 'undefined') return null;
+    return createPortal(
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-[1000]">
+            <div className="bg-gray-800 rounded-lg shadow-2xl w-full max-w-2xl z-[1010]">
                 <form onSubmit={handleSubmit} className="p-8 space-y-4">
                     <h2 className="text-2xl font-bold text-white">Write New Blog Post</h2>
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Post Title" className="w-full p-2 bg-gray-700 rounded-md" required />
@@ -24,7 +26,8 @@ const AddEditBlogModal = ({ onClose, onSave }) => {
                     </div>
                 </form>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
