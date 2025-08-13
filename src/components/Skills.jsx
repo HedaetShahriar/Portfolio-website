@@ -34,7 +34,7 @@ const Skills = () => {
 
     return (
         <section id="skills">
-            <div className="container mx-auto px-6 py-24 md:py-32 scroll-reveal">
+            <div className="container mx-auto px-6 py-16 md:py-24 scroll-reveal">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl font-bold">Technical Skills</h2>
                     <div className="w-24 h-1 bg-indigo-500 mx-auto mt-4"></div>
