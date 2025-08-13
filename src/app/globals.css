@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-    --bg-dark: #030712; /* Deep, dark navy */
-    --bg-light: #111827; /* Slightly lighter navy for cards */
+    --bg-dark: #030712;
+    --bg-light: #111827;
     --border-color: #1f2937;
     --text-primary: #f9fafb;
     --text-secondary: #9ca3af;
@@ -20,18 +20,21 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-sora), sans-serif;
     font-weight: 700;
-    letter-spacing: -0.025em; /* Tighter letter spacing for headings */
+    letter-spacing: -0.025em;
 }
 
 .glass-effect {
+    position: relative; /* Ensures z-index is applied correctly */
+    z-index: 40; /* Stacks the element within its parent */
     background: rgba(17, 24, 39, 0.6);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
 }
 
 .navbar-scrolled {
-    background: rgba(3, 7, 18, 0.85);
-    border-bottom: 1px solid var(--border-color);
+    background: rgba(3, 7, 18, 0.95);
+    backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scroll-reveal {
@@ -64,7 +67,8 @@ h1, h2, h3, h4, h5, h6 {
     transition: transform 0.2s ease-out;
 }
 
-header, main, footer {
+/* FIX: Removed 'header' from this rule to allow sticky positioning */
+main, footer {
     position: relative;
     z-index: 1;
 }

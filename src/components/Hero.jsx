@@ -36,7 +36,7 @@ const Hero = () => {
 
     return (
         <section id="home" className="relative overflow-hidden">
-            <div className="container relative mx-auto px-6 py-16 md:py-24 flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+            <div className="container relative mx-auto px-6 pb-16 md:py-24 flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                 <div className="md:w-3/5 text-center md:text-left">
                     <p className="text-lg text-indigo-400 font-semibold mb-3 scroll-reveal">{profile.designation}</p>
                     <h1 className="text-5xl md:text-7xl font-bold text-white mb-5 scroll-reveal" style={{ transitionDelay: '100ms' }}>{profile.name}</h1>
