@@ -8,7 +8,8 @@ const Hero = () => {
     // Provide a more complete initial state to prevent errors before data loads
     const [profile, setProfile] = useState({
         name: "Md. Hedaet Shahriar Himon",
-        designation: "Full Stack Developer",
+        designation: "MERN Stack Developer",
+        interest: "AI/ML Enthusiast & Robotics",
         bio: "I build scalable, efficient, and beautiful web applications from front to back.",
         socialLinks: {
             github: "https://github.com/HedaetShahriar",
@@ -38,8 +39,9 @@ const Hero = () => {
         <section id="home" className="relative overflow-hidden">
             <div className="container relative mx-auto px-6 pb-16 md:py-24 flex flex-col-reverse md:flex-row items-center justify-between gap-12">
                 <div className="md:w-3/5 text-center md:text-left">
-                    <p className="text-lg text-indigo-400 font-semibold mb-3 scroll-reveal">{profile.designation}</p>
-                    <h1 className="text-5xl md:text-7xl font-bold text-white mb-5 scroll-reveal" style={{ transitionDelay: '100ms' }}>{profile.name}</h1>
+                    <p className="text-lg text-indigo-400 font-semibold scroll-reveal">{profile.designation}</p>
+                    <h1 className="text-5xl md:text-7xl font-bold text-white scroll-reveal">{profile.name}</h1>
+                    <p className='mb-5 font-semibold scroll-reveal text-gray-400'>{profile.interest}</p>
                     <p className="text-lg text-gray-400 mb-10 max-w-xl mx-auto md:mx-0 scroll-reveal" style={{ transitionDelay: '200ms' }}>{profile.bio}</p>
                     <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start scroll-reveal" style={{ transitionDelay: '300ms' }}>
                         <a href={profile.cvUrl} download className="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-indigo-700 transform hover:-translate-y-1 transition-all duration-300">Download Resume</a>

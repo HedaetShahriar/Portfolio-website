@@ -1,6 +1,7 @@
 export let profileData = {
     name: "Md. Hedaet Shahriar Himon",
-    designation: "Full Stack Developer",
+    designation: "MERN Stack Developer",
+        interest: "AI/ML Enthusiast & Robotics",
     bio: "I build scalable, efficient, and beautiful web applications from front to back.",
     profileImage: "/profile.jpg",
     socialLinks: {

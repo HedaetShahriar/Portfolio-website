@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* ---------------------------------- */
+/* THEME VARIABLES                    */
+/* ---------------------------------- */
+
+/* Default Theme (Dark Mode) */
 :root {
     --bg-dark: #030712;
     --bg-light: #111827;
@@ -8,13 +13,53 @@
     --text-secondary: #9ca3af;
     --accent-indigo: #6366f1;
     --accent-cyan: #22d3ee;
+
+    /* Semantic surfaces */
+    --surface-0: var(--bg-dark);   /* app background */
+    --surface-1: var(--bg-light);  /* navbar/cards */
+    --surface-2: #0b1220;          /* elevated */
+
+    /* UI tokens */
+    --overlay: rgba(17, 24, 39, 0.6);
+    --divider: rgba(255, 255, 255, 0.08);
+    --ring: var(--accent-indigo);
+    --shadow: rgba(0, 0, 0, 0.4);
+
+    color-scheme: dark;
 }
+
+/* Light Theme Overrides */
+.theme-light {
+    --bg-dark: #f8fafc;       /* soft page */
+    --bg-light: #ffffff;      /* pure white cards */
+    --border-color: #e5e7eb;  /* slate-200 */
+    --text-primary: #1f2937;  /* slate-800 */
+    --text-secondary: #6b7280;/* slate-500 */
+
+    /* Semantic surfaces */
+    --surface-0: #f8fafc;     /* app background */
+    --surface-1: #ffffff;     /* navbar/cards */
+    --surface-2: #eef2f7;     /* elevated */
+
+    /* UI tokens */
+    --overlay: rgba(255, 255, 255, 0.7);
+    --divider: rgba(0, 0, 0, 0.06);
+    --ring: var(--accent-indigo);
+    --shadow: rgba(0, 0, 0, 0.15);
+
+    color-scheme: light;
+}
+
+/* ---------------------------------- */
+/* BASE STYLES                        */
+/* ---------------------------------- */
 
 body {
     font-family: var(--font-inter), sans-serif;
-    background-color: var(--bg-dark);
+    background-color: var(--surface-0);
     color: var(--text-primary);
     line-height: 1.75;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -23,19 +68,45 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.025em;
 }
 
+/* Improve text selection contrast */
+::selection { background: color-mix(in srgb, var(--accent-indigo) 30%, transparent); color: #fff; }
+.theme-light ::selection { background: #e0e7ff; color: #111827; }
+
+/* ---------------------------------- */
+/* COMPONENT STYLES                   */
+/* ---------------------------------- */
+
 .glass-effect {
-    position: relative; /* Ensures z-index is applied correctly */
-    z-index: 40; /* Stacks the element within its parent */
-    background: rgba(17, 24, 39, 0.6);
+    position: relative;
+    z-index: 40;
+    background: var(--overlay);
     backdrop-filter: blur(12px);
     border: 1px solid var(--border-color);
 }
 
+/* Keep class for compatibility but avoid re-animating */
 .navbar-scrolled {
-    background: rgba(3, 7, 18, 0.95);
-    backdrop-filter: blur(12px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--surface-1);
+  background: color-mix(in srgb, var(--surface-1) 92%, transparent);
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  /* removed shadow line */
+  transition: none;
 }
+
+/* Cards (skills, etc.) */
+.skill-card-glossy {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid var(--divider);
+}
+.theme-light .skill-card-glossy {
+    background: var(--surface-1);
+    border: 1px solid var(--border-color);
+}
+
+/* ---------------------------------- */
+/* UTILITY STYLES                     */
+/* ---------------------------------- */
 
 .scroll-reveal {
     opacity: 0;
@@ -48,11 +119,14 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(0);
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-track { background: var(--surface-0); }
 ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #374151; }
+.theme-light ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
+/* Glow effect */
 #glow-effect {
     position: fixed;
     width: 800px;
@@ -66,14 +140,91 @@ h1, h2, h3, h4, h5, h6 {
     filter: blur(100px);
     transition: transform 0.2s ease-out;
 }
+.theme-light #glow-effect { opacity: 0.15; }
 
-/* FIX: Removed 'header' from this rule to allow sticky positioning */
-main, footer {
-    position: relative;
-    z-index: 1;
+/* Ensure content layers above decorative effects */
+main, footer { position: relative; z-index: 1; }
+
+/* ---------------------------------- */
+/* LIGHT THEME COMPATIBILITY MAPPING  */
+/* Map common Tailwind gray utilities to theme variables in light mode */
+/* ---------------------------------- */
+
+/* Backgrounds */
+.theme-light .bg-gray-900 { background-color: var(--surface-1) !important; }
+.theme-light .bg-gray-800 { background-color: var(--surface-2) !important; }
+.theme-light .bg-gray-700 { background-color: var(--surface-2) !important; }
+.theme-light .bg-gray-700\/50 { background-color: color-mix(in srgb, var(--surface-2) 50%, transparent) !important; }
+.theme-light .bg-gray-700\/30 { background-color: color-mix(in srgb, var(--surface-2) 30%, transparent) !important; }
+.theme-light .bg-gray-700\/20 { background-color: color-mix(in srgb, var(--surface-2) 20%, transparent) !important; }
+.theme-light .bg-gray-600 { background-color: var(--surface-2) !important; }
+.theme-light .bg-gray-900\/50 { background-color: color-mix(in srgb, var(--surface-1) 70%, transparent) !important; }
+.theme-light .bg-gray-900\/80 { background-color: color-mix(in srgb, var(--surface-1) 85%, transparent) !important; }
+.theme-light .bg-gray-900\/95 { background-color: color-mix(in srgb, var(--surface-1) 95%, transparent) !important; }
+
+/* Borders */
+.theme-light .border-gray-800, 
+.theme-light .border-gray-700, 
+.theme-light .border-gray-600 { border-color: var(--border-color) !important; }
+
+/* Text colors */
+.theme-light .text-white { color: var(--text-primary) !important; }
+.theme-light .text-gray-400 { color: var(--text-secondary) !important; }
+.theme-light .text-gray-300 { color: #374151 !important; }
+.theme-light .text-gray-500 { color: #6b7280 !important; }
+
+/* Hovers */
+.theme-light .hover\:bg-gray-700:hover { background-color: var(--surface-2) !important; }
+.theme-light .hover\:bg-gray-700\/50:hover { background-color: color-mix(in srgb, var(--surface-2) 50%, transparent) !important; }
+.theme-light .hover\:text-white:hover { color: var(--text-primary) !important; }
+
+/* Inputs using dark backgrounds */
+.theme-light input.bg-gray-700,
+.theme-light textarea.bg-gray-700,
+.theme-light select.bg-gray-700 { background-color: var(--surface-1) !important; color: var(--text-primary) !important; }
+.theme-light input.bg-gray-700:hover,
+.theme-light textarea.bg-gray-700:hover,
+.theme-light select.bg-gray-700:hover {
+  background-color: var(--surface-1) !important;
+  color: var(--text-primary) !important;
+}
+.theme-light input.bg-gray-700:focus,
+.theme-light textarea.bg-gray-700:focus,
+.theme-light select.bg-gray-700:focus {
+  background-color: var(--surface-1) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 0 0 2px var(--ring);
+  border-color: var(--ring);
+}
+.theme-light .focus\:ring-indigo-500:focus {
+  --tw-ring-color: var(--ring) !important;
+}
+.theme-light input.bg-gray-700,
+.theme-light textarea.bg-gray-700,
+.theme-light select.bg-gray-700 {
+  transition: color 0.2s, box-shadow 0.2s, border-color 0.2s;
+  /* Remove background transition to prevent flicker */
 }
 
-.skill-card-glossy {
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* Buttons using gray backgrounds */
+.theme-light .bg-gray-800:hover { background-color: var(--surface-2) !important; }
+.theme-light .bg-gray-700:hover { background-color: var(--surface-2) !important; }
+
+/* Optional: Respect system preference without JS (keeps dark default if classes present) */
+/*
+@media (prefers-color-scheme: light) {
+  html:not(.theme-dark):not(.theme-light) {
+    --bg-dark: #f8fafc;
+    --bg-light: #ffffff;
+    --border-color: #e5e7eb;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --surface-0: #f8fafc;
+    --surface-1: #ffffff;
+    --surface-2: #eef2f7;
+    --overlay: rgba(255, 255, 255, 0.7);
+    --divider: rgba(0, 0, 0, 0.06);
+    color-scheme: light;
+  }
 }
+*/
