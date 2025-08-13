@@ -1,7 +1,7 @@
 export let profileData = {
     name: "Md. Hedaet Shahriar Himon",
     designation: "MERN Stack Developer",
-        interest: "AI/ML Enthusiast & Robotics",
+    interest: "AI/ML Enthusiast & Robotics",
     bio: "I build scalable, efficient, and beautiful web applications from front to back.",
     profileImage: "/profile.jpg",
     socialLinks: {
@@ -17,6 +17,13 @@ export let profileData = {
             "Outside of coding, I'm an avid follower of cricket and enjoy exploring new places, which helps me stay creative and balanced."
         ]
     },
+    education: [
+        {
+            degree: 'Bachelor of Science in Computer Science & Engineering',
+            institution: 'American International University-Bangladesh (AIUB)',
+            year: 'Expected 2026'
+        }
+    ],
     contact: {
         email: "shahriahedaet@gmail.com",
         phone: "+880 1741453691",
